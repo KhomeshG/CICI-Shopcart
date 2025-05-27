@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const responseTime = require('response-time');
 const cors = require('cors');
 
-const {PORT, DB_ALTER, DB_FORCE, NODE_ENV} = require('./config/server_config');
+const { PORT, DB_ALTER, DB_FORCE, NODE_ENV } = require('./config/server_config');
 const ApiRouter = require('./routes/api_router');
 
 const db = require('./config/db_config');
@@ -24,7 +24,7 @@ app.use(cookieParser());
 
 app.use(bodyParser.json());
 app.use(bodyParser.text());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', ApiRouter); // if any req comes with url starting with /api
 
@@ -36,21 +36,21 @@ app.get('/ping', (req, res) => {
 
 app.listen(PORT, async () => {
     console.log(`Server for Shopcart is Up ${PORT}`);
-    if(NODE_ENV == 'development') {
-        if(DB_FORCE == true) {
-            await db.sync({ force: true});
+    if (NODE_ENV == 'development') {
+        if (DB_FORCE == true) {
+            await db.sync({ force: true });
         } else if (DB_ALTER == true) {
-            await db.sync({ alter: true});
+            await db.sync({ alter: true });
         } else {
             await db.sync();
         }
     }
-    if(NODE_ENV == 'production') {
+    if (NODE_ENV == 'production') {
         console.log("Syncing db in order");
         syncDbInOrder();
     }
-   
-    console.log('DB Connected');
+
+    console.log('DB Connected Succesfully');
 
     // const c = await Category.findByPk(2);
 
